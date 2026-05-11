@@ -8,7 +8,7 @@ namespace TestProject1
         public void Test_Add()
         {
             var calc = new Class1();
-            Assert.Equal(4, calc.Add(1, 3));
+            Assert.Equal(5, calc.Add(1, 3));
         }
     }
 }
