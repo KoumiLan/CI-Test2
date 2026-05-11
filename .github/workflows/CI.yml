@@ -8,8 +8,8 @@ on: [push]
 
 jobs:
   build-and-test: #job名稱 
-    runs-on: windows-latest
-    # runs-on: ubuntu-latest
+    # runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     env:
       # 1. 這裡改成你的 .sln 檔名
