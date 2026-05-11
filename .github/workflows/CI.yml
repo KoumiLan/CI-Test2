@@ -1,0 +1,38 @@
+name: CI
+
+on: [push]
+  # push:
+  #   branches: [ "master" ]  # 這裡要注意，如果你 GitHub 預設分支是 master 就要改 master
+  # pull_request:
+  #   branches: [ "master" ]
+
+jobs:
+  build-and-test: #job名稱 
+    runs-on: windows-latest
+    # runs-on: ubuntu-latest
+
+    env:
+      # 1. 這裡改成你的 .sln 檔名
+      Sln: ClassLibrary1.sln
+      # 2. 設定編譯模式為 Release
+      Configuration: Release
+
+    steps:
+    - name: 步驟 1 - 下載程式碼到執行環境
+      uses: actions/checkout@v4
+
+    - name: 步驟 2 - 安裝 .NET 8.0 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        # cache: true
+        # cache-dependency-path: ${{ env.Solution_Name }}
+
+    - name: 步驟 3 - 還原依賴 (Restore)
+      run: dotnet restore ${{ env.Sln }}
+
+    - name: 步驟 4 - 編譯專案 (Build)
+      run: dotnet build ${{ env.Sln }} --configuration ${{ env.Configuration }} --no-restore
+
+    - name: 步驟 5 - 執行單元測試 (Test)
+      run: dotnet test ${{ env.Sln }} --configuration ${{ env.Configuration }} --no-build --verbosity normal
